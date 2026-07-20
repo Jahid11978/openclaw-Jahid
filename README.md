@@ -1,4 +1,4 @@
-# 🦞 OpenClaw — Personal AI Assistant
+# jahid Personal AI Assistant
 
 <p align="center">
     <picture>
@@ -99,10 +99,10 @@ Model note: while many providers and models are supported, prefer a current flag
 Runtime: **Node 24 (recommended) or Node 22.14+**.
 
 ```bash
-npm install -g openclaw@latest
+npm install -g jahid@latest
 # or: pnpm add -g openclaw@latest
 
-openclaw onboard --install-daemon
+jahid onboard --install-daemon
 ```
 
 OpenClaw Onboard installs the Gateway daemon (launchd/systemd user service) so it stays running.
@@ -111,29 +111,28 @@ OpenClaw Onboard installs the Gateway daemon (launchd/systemd user service) so i
 
 Runtime: **Node 24 (recommended) or Node 22.14+**.
 
-Full beginner guide (auth, pairing, channels): [Getting started](https://docs.openclaw.ai/start/getting-started)
+jahid Full beginner guide (auth, pairing, channels): [Getting started](https://docs.openclaw.ai/start/getting-started)
 
 ```bash
-openclaw onboard --install-daemon
-
-openclaw gateway --port 18789 --verbose
+jahid onboard --install-daemon
+ gateway --port 18789 --verbose
 
 # Send a message
-openclaw message send --target +1234567890 --message "Hello from OpenClaw"
+jahid message send --target +1234567890 --message "Hello from OpenClaw"
 
 # Talk to the assistant (optionally deliver back to any connected channel: WhatsApp/Telegram/Slack/Discord/Google Chat/Signal/iMessage/BlueBubbles/IRC/Microsoft Teams/Matrix/Feishu/LINE/Mattermost/Nextcloud Talk/Nostr/Synology Chat/Tlon/Twitch/Zalo/Zalo Personal/WeChat/QQ/WebChat)
-openclaw agent --message "Ship checklist" --thinking high
+jahid agent --message "Ship checklist" --thinking high
 ```
 
-Upgrading? [Updating guide](https://docs.openclaw.ai/install/updating) (and run `openclaw doctor`).
+Upgrading? [Updating guide](https://docs.openclaw.ai/install/updating) (and run `jahid doctor`).
 
-Models config + CLI: [Models](https://docs.openclaw.ai/concepts/models). Auth profile rotation + fallbacks: [Model failover](https://docs.openclaw.ai/concepts/model-failover).
+Models config + CLI: [Models](https://docs.jahid.ai/concepts/models). Auth profile rotation + fallbacks: [Model failover](https://docs.jahid.ai/concepts/model-failover).
 
 ## Security defaults (DM access)
 
-OpenClaw connects to real messaging surfaces. Treat inbound DMs as **untrusted input**.
+jahid connects to real messaging surfaces. Treat inbound DMs as **untrusted input**.
 
-Full security guide: [Security](https://docs.openclaw.ai/gateway/security)
+Full security guide: [Security](https://docs.jahid.ai/gateway/security)
 
 Default behavior on Telegram/WhatsApp/Signal/iMessage/Microsoft Teams/Discord/Google Chat/Slack:
 
@@ -145,39 +144,39 @@ Run `openclaw doctor` to surface risky/misconfigured DM policies.
 
 ## Highlights
 
-- **[Local-first Gateway](https://docs.openclaw.ai/gateway)** — single control plane for sessions, channels, tools, and events.
-- **[Multi-channel inbox](https://docs.openclaw.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Tlon, Twitch, Zalo, Zalo Personal, WeChat, QQ, WebChat, macOS, iOS/Android.
-- **[Multi-agent routing](https://docs.openclaw.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
-- **[Voice Wake](https://docs.openclaw.ai/nodes/voicewake) + [Talk Mode](https://docs.openclaw.ai/nodes/talk)** — wake words on macOS/iOS and continuous voice on Android (ElevenLabs + system TTS fallback).
-- **[Live Canvas](https://docs.openclaw.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.openclaw.ai/platforms/mac/canvas#canvas-a2ui).
-- **[First-class tools](https://docs.openclaw.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
-- **[Companion apps](https://docs.openclaw.ai/platforms/macos)** — macOS menu bar app + iOS/Android [nodes](https://docs.openclaw.ai/nodes).
-- **[Onboarding](https://docs.openclaw.ai/start/wizard) + [skills](https://docs.openclaw.ai/tools/skills)** — onboarding-driven setup with bundled/managed/workspace skills.
+- **[Local-first Gateway](https://docs.jahid.ai/gateway)** — single control plane for sessions, channels, tools, and events.
+- **[Multi-channel inbox](https://docs.jahid.ai/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, BlueBubbles (iMessage), iMessage (legacy), IRC, Microsoft Teams, Matrix, Feishu, LINE, Mattermost, Nextcloud Talk, Nostr, Synology Chat, Tlon, Twitch, Zalo, Zalo Personal, WeChat, QQ, WebChat, macOS, iOS/Android.
+- **[Multi-agent routing](https://docs.jahid.ai/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
+- **[Voice Wake](https://docs.jahid.ai/nodes/voicewake) + [Talk Mode](https://docs.openclaw.ai/nodes/talk)** — wake words on macOS/iOS and continuous voice on Android (ElevenLabs + system TTS fallback).
+- **[Live Canvas](https://docs.jahid.ai/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.openclaw.ai/platforms/mac/canvas#canvas-a2ui).
+- **[First-class tools](https://docs.jahid.ai/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
+- **[Companion apps](https://docs.jahid.ai/platforms/macos)** — macOS menu bar app + iOS/Android [nodes](https://docs.openclaw.ai/nodes).
+- **[Onboarding](https://docs.jahid.ai/start/wizard) + [skills](https://docs.openclaw.ai/tools/skills)** — onboarding-driven setup with bundled/managed/workspace skills.
 
 ## Security model (important)
 
 - Default: tools run on the host for the `main` session, so the agent has full access when it is just you.
 - Group/channel safety: set `agents.defaults.sandbox.mode: "non-main"` to run non-`main` sessions inside sandboxes. Docker is the default sandbox backend; SSH and OpenShell backends are also available.
 - Typical sandbox default: allow `bash`, `process`, `read`, `write`, `edit`, `sessions_list`, `sessions_history`, `sessions_send`, `sessions_spawn`; deny `browser`, `canvas`, `nodes`, `cron`, `discord`, `gateway`.
-- Before exposing anything remotely, read [Security](https://docs.openclaw.ai/gateway/security), [Sandboxing](https://docs.openclaw.ai/gateway/sandboxing), and [Configuration](https://docs.openclaw.ai/gateway/configuration).
+- Before exposing anything remotely, read [Security](https://docs.jahid.ai/gateway/security), [Sandboxing](https://docs.jahid.ai/gateway/sandboxing), and [Configuration](https://docs.jahid.ai/gateway/configuration).
 
 ## Operator quick refs
 
 - Chat commands: `/status`, `/new`, `/reset`, `/compact`, `/think <level>`, `/verbose on|off`, `/trace on|off`, `/usage off|tokens|full`, `/restart`, `/activation mention|always`
 - Session tools: `sessions_list`, `sessions_history`, `sessions_send`
-- Skills registry: [ClawHub](https://clawhub.ai)
-- Architecture overview: [Architecture](https://docs.openclaw.ai/concepts/architecture)
+- Skills registry: [jahid](https://jahid.ai)
+- Architecture overview: [Architecture](https://docs.jahid.ai/concepts/architecture)
 
 ## Docs by goal
 
-- New here: [Getting started](https://docs.openclaw.ai/start/getting-started), [Onboarding](https://docs.openclaw.ai/start/wizard), [Updating](https://docs.openclaw.ai/install/updating)
-- Channel setup: [Channels index](https://docs.openclaw.ai/channels), [WhatsApp](https://docs.openclaw.ai/channels/whatsapp), [Telegram](https://docs.openclaw.ai/channels/telegram), [Discord](https://docs.openclaw.ai/channels/discord), [Slack](https://docs.openclaw.ai/channels/slack)
-- Apps + nodes: [macOS](https://docs.openclaw.ai/platforms/macos), [iOS](https://docs.openclaw.ai/platforms/ios), [Android](https://docs.openclaw.ai/platforms/android), [Nodes](https://docs.openclaw.ai/nodes)
-- Config + security: [Configuration](https://docs.openclaw.ai/gateway/configuration), [Security](https://docs.openclaw.ai/gateway/security), [Sandboxing](https://docs.openclaw.ai/gateway/sandboxing)
-- Remote + web: [Gateway](https://docs.openclaw.ai/gateway), [Remote access](https://docs.openclaw.ai/gateway/remote), [Tailscale](https://docs.openclaw.ai/gateway/tailscale), [Web surfaces](https://docs.openclaw.ai/web)
-- Tools + automation: [Tools](https://docs.openclaw.ai/tools), [Skills](https://docs.openclaw.ai/tools/skills), [Cron jobs](https://docs.openclaw.ai/automation/cron-jobs), [Webhooks](https://docs.openclaw.ai/automation/webhook), [Gmail Pub/Sub](https://docs.openclaw.ai/automation/gmail-pubsub)
-- Internals: [Architecture](https://docs.openclaw.ai/concepts/architecture), [Agent](https://docs.openclaw.ai/concepts/agent), [Session model](https://docs.openclaw.ai/concepts/session), [Gateway protocol](https://docs.openclaw.ai/reference/rpc)
-- Troubleshooting: [Channel troubleshooting](https://docs.openclaw.ai/channels/troubleshooting), [Logging](https://docs.openclaw.ai/logging), [Docs home](https://docs.openclaw.ai)
+- New here: [Getting started](https://docs.jahid.ai/start/getting-started), [Onboarding](https://docs.jahid.ai/start/wizard), [Updating](https://docs.jahid.ai/install/updating)
+- Channel setup: [Channels index](https://docs.jahid.ai/channels), [WhatsApp](https://docs.jahid.ai/channels/whatsapp), [Telegram](https://docs.jahid.ai/channels/telegram), [Discord](https://docs.jahid.ai/channels/discord), [Slack](https://docs.jahid.ai/channels/slack)
+- Apps + nodes: [macOS](https://docs.jahid.ai/platforms/macos), [iOS](https://docs.jahid.ai/platforms/ios), [Android](https://docs.jahid.ai/platforms/android), [Nodes](https://docs.jahid.ai/nodes)
+- Config + security: [Configuration](https://docs.jahid.ai/gateway/configuration), [Security](https://docs.jahid.ai/gateway/security), [Sandboxing](https://docs.jahid.ai/gateway/sandboxing)
+- Remote + web: [Gateway](https://docs.jahid.ai/gateway), [Remote access](https://docs.jahid.ai/gateway/remote), [Tailscale](https://docs.jahid.ai/gateway/tailscale), [Web surfaces](https://docs.jahid.ai/web)
+- Tools + automation: [Tools](https://docs.jahid.ai/tools), [Skills](https://docs.jahid.ai/tools/skills), [Cron jobs](https://docs.jahid.ai/automation/cron-jobs), [Webhooks](https://docs.jahid.ai/automation/webhook), [Gmail Pub/Sub](https://docs.jahid.ai/automation/gmail-pubsub)
+- Internals: [Architecture](https://docs.jahid.ai/concepts/architecture), [Agent](https://docs.jahid.ai/concepts/agent), [Session model](https://docs.jahid.ai/concepts/session), [Gateway protocol](https://docs.jahid.ai/reference/rpc)
+- Troubleshooting: [Channel troubleshooting](https://docs.jahid.ai/channels/troubleshooting), [Logging](https://docs.jahid.ai/logging), [Docs home](https://docs.jahid.ai)
 
 ## Apps (optional)
 
@@ -192,7 +191,7 @@ If you plan to build/run companion apps, follow the platform runbooks below.
 - WebChat + debug tools.
 - Remote gateway control over SSH.
 
-Note: signed builds required for macOS permissions to stick across rebuilds (see [macOS Permissions](https://docs.openclaw.ai/platforms/mac/permissions)).
+Note: signed builds required for macOS permissions to stick across rebuilds (see [macOS Permissions](https://docs.jahid.ai/platforms/mac/permissions)).
 
 ### iOS node (optional)
 
@@ -200,13 +199,13 @@ Note: signed builds required for macOS permissions to stick across rebuilds (see
 - Voice trigger forwarding + Canvas surface.
 - Controlled via `openclaw nodes …`.
 
-Runbook: [iOS connect](https://docs.openclaw.ai/platforms/ios).
+Runbook: [iOS connect](https://docs.jahid.ai/platforms/ios).
 
 ### Android node (optional)
 
-- Pairs as a WS node via device pairing (`openclaw devices ...`).
+- Pairs as a WS node via device pairing (`jahid devices ...`).
 - Exposes Connect/Chat/Voice tabs plus Canvas, Camera, Screen capture, and Android device command families.
-- Runbook: [Android connect](https://docs.openclaw.ai/platforms/android).
+- Runbook: [Android connect](https://docs.jahid.ai/platforms/android).
 
 ## From source (development)
 
@@ -215,13 +214,13 @@ Prefer `pnpm` for builds from source. Bun is optional for running TypeScript dir
 For the dev loop:
 
 ```bash
-git clone https://github.com/openclaw/openclaw.git
-cd openclaw
+git clone https://github.com/jahid/jahid.git
+cd jahid
 
 pnpm install
 
 # First run only (or after resetting local OpenClaw config/workspace)
-pnpm openclaw setup
+pnpm jahid setup
 
 # Optional: prebuild Control UI before first startup
 pnpm ui:build
@@ -237,9 +236,9 @@ pnpm build
 pnpm ui:build
 ```
 
-`pnpm openclaw setup` writes the local config/workspace needed for `pnpm gateway:watch`. It is safe to re-run, but you normally only need it on first setup or after resetting local state. `pnpm gateway:watch` does not rebuild `dist/control-ui`, so rerun `pnpm ui:build` after `ui/` changes or use `pnpm ui:dev` when iterating on the Control UI. If you want this checkout to run onboarding directly, use `pnpm openclaw onboard --install-daemon`.
+`pnpm jahid setup` writes the local config/workspace needed for `pnpm gateway:watch`. It is safe to re-run, but you normally only need it on first setup or after resetting local state. `pnpm gateway:watch` does not rebuild `dist/control-ui`, so rerun `pnpm ui:build` after `ui/` changes or use `pnpm ui:dev` when iterating on the Control UI. If you want this checkout to run onboarding directly, use `pnpm openclaw onboard --install-daemon`.
 
-Note: `pnpm openclaw ...` runs TypeScript directly (via `tsx`). `pnpm build` produces `dist/` for running via Node / the packaged `openclaw` binary, while `pnpm gateway:watch` rebuilds the runtime on demand during the dev loop.
+Note: `pnpm jahid ...` runs TypeScript directly (via `tsx`). `pnpm build` produces `dist/` for running via Node / the packaged `openclaw` binary, while `pnpm gateway:watch` rebuilds the runtime on demand during the dev loop.
 
 ## Development channels
 
@@ -247,18 +246,18 @@ Note: `pnpm openclaw ...` runs TypeScript directly (via `tsx`). `pnpm build` pro
 - **beta**: prerelease tags (`vYYYY.M.D-beta.N`), npm dist-tag `beta` (macOS app may be missing).
 - **dev**: moving head of `main`, npm dist-tag `dev` (when published).
 
-Switch channels (git + npm): `openclaw update --channel stable|beta|dev`.
-Details: [Development channels](https://docs.openclaw.ai/install/development-channels).
+Switch channels (git + npm): `jahid update --channel stable|beta|dev`.
+Details: [Development channels](https://docs.jahid.ai/install/development-channels).
 
 ## Agent workspace + skills
 
-- Workspace root: `~/.openclaw/workspace` (configurable via `agents.defaults.workspace`).
+- Workspace root: `~/.jahid/workspace` (configurable via `agents.defaults.workspace`).
 - Injected prompt files: `AGENTS.md`, `SOUL.md`, `TOOLS.md`.
-- Skills: `~/.openclaw/workspace/skills/<skill>/SKILL.md`.
+- Skills: `~/.jahid/workspace/skills/<skill>/SKILL.md`.
 
 ## Configuration
 
-Minimal `~/.openclaw/openclaw.json` (model + defaults):
+Minimal `~/.jahid/openclaw.json` (model + defaults):
 
 ```json5
 {
@@ -268,21 +267,21 @@ Minimal `~/.openclaw/openclaw.json` (model + defaults):
 }
 ```
 
-[Full configuration reference (all keys + examples).](https://docs.openclaw.ai/gateway/configuration)
+[Full configuration reference (all keys + examples).](https://docs.jahid.ai/gateway/configuration)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=openclaw/openclaw&type=date&legend=top-left)](https://www.star-history.com/#openclaw/openclaw&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=jahid/jahid&type=date&legend=top-left)](https://www.star-history.com/#jahid/jahid&type=date&legend=top-left)
 
-## Molty
+## jahid
 
-OpenClaw was built for **Molty**, a space lobster AI assistant. 🦞
+jahid was built for **Molty**, a space lobster AI assistant. 
 by Peter Steinberger and the community.
 
-- [openclaw.ai](https://openclaw.ai)
+- [jahid.ai](https://jahid.ai)
 - [soul.md](https://soul.md)
 - [steipete.me](https://steipete.me)
-- [@openclaw](https://x.com/openclaw)
+- [@ljahid](https://x.com/jahid)
 
 ## Community
 
@@ -295,7 +294,7 @@ Special thanks to Adam Doppelt for the lobster.bot domain.
 
 Thanks to all clawtributors:
 
-<!-- clawtributors:start -->
+<!-- jahidclawtributors:start -->
 
 [![steipete](https://avatars.githubusercontent.com/u/58493?v=4&s=48)](https://github.com/steipete) [![vincentkoc](https://avatars.githubusercontent.com/u/25068?v=4&s=48)](https://github.com/vincentkoc) [![Takhoffman](https://avatars.githubusercontent.com/u/781889?v=4&s=48)](https://github.com/Takhoffman) [![obviyus](https://avatars.githubusercontent.com/u/22031114?v=4&s=48)](https://github.com/obviyus) [![gumadeiras](https://avatars.githubusercontent.com/u/5599352?v=4&s=48)](https://github.com/gumadeiras) [![Mariano Belinky](https://avatars.githubusercontent.com/u/132747814?v=4&s=48)](https://github.com/mbelinky) [![vignesh07](https://avatars.githubusercontent.com/u/1436853?v=4&s=48)](https://github.com/vignesh07) [![joshavant](https://avatars.githubusercontent.com/u/830519?v=4&s=48)](https://github.com/joshavant) [![scoootscooob](https://avatars.githubusercontent.com/u/167050519?v=4&s=48)](https://github.com/scoootscooob) [![jacobtomlinson](https://avatars.githubusercontent.com/u/1610850?v=4&s=48)](https://github.com/jacobtomlinson)
 [![shakkernerd](https://avatars.githubusercontent.com/u/165377636?v=4&s=48)](https://github.com/shakkernerd) [![sebslight](https://avatars.githubusercontent.com/u/19554889?v=4&s=48)](https://github.com/sebslight) [![tyler6204](https://avatars.githubusercontent.com/u/64381258?v=4&s=48)](https://github.com/tyler6204) [![ngutman](https://avatars.githubusercontent.com/u/1540134?v=4&s=48)](https://github.com/ngutman) [![thewilloftheshadow](https://avatars.githubusercontent.com/u/35580099?v=4&s=48)](https://github.com/thewilloftheshadow) [![Sid-Qin](https://avatars.githubusercontent.com/u/201593046?v=4&s=48)](https://github.com/Sid-Qin) [![mcaxtr](https://avatars.githubusercontent.com/u/7562095?v=4&s=48)](https://github.com/mcaxtr) [![eleqtrizit](https://avatars.githubusercontent.com/u/31522568?v=4&s=48)](https://github.com/eleqtrizit) [![BunsDev](https://avatars.githubusercontent.com/u/68980965?v=4&s=48)](https://github.com/BunsDev) [![cpojer](https://avatars.githubusercontent.com/u/13352?v=4&s=48)](https://github.com/cpojer)
@@ -480,4 +479,4 @@ yuna78
 yuweuii
 yxjsxy
 zijiess
-clawtributors:hidden:end -->
+jahidclawtributors:hidden:end -->
